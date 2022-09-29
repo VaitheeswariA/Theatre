@@ -17,7 +17,7 @@ public class Start_Booking extends Home_Page{
 		//Home_Page booking_details=new Home_Page();
 		boolean lets_start = true;
 		while (lets_start) {
-			System.out.println("1.Login \n2.Movie reviews \n3.Exit\n");
+			System.out.println("1.Login \n2.Movie info \n3.Exit\n");
 			int start_with = sc.nextInt();
 			switch (start_with) {
 			case 1: {
@@ -59,9 +59,31 @@ public class Start_Booking extends Home_Page{
 				break;
 				
 			case 2:{
+					System.out.println("*********Ponniyin Selvan****************");
+					System.out.println("Rating : Most expected movie in Tamil Industry");
+					System.out.println("------------------------------------------");
+					System.out.println("* "+"upcoming Indian Tamil-language epic period action film directed by Mani Ratnam");
+					System.out.println();
+					
+					System.out.println("*********Vendhu Thanindhadhu Kadu****************");
+					System.out.println("Rating : good movie");
+					System.out.println("------------------------------------------");
+					System.out.println("* "+"The Kindling is a 2022 Indian Tamil-language gangster film directed by Gautham Vasudev Menon, written by B. Jeyamohan");
+					System.out.println();
+					
+					System.out.println("*********Thiruchitrambalam****************");
+					System.out.println("Rating : nice entertaining movie");
+					System.out.println("------------------------------------------");
+					System.out.println("* "+"Indian Tamil-language romantic comedy-drama film written and directed by Mithran R Jawahar.");
+					System.out.println();
+					
+					System.out.println("*********Viruman****************");
+					System.out.println("Rating : nice village movie");
+					System.out.println("------------------------------------------");
+					System.out.println("* "+"Indian Tamil-language village film written and directed by M. Muthaiah");
+					System.out.println();
 					
 					
-				
 					}
 				break;
 			
