@@ -26,10 +26,10 @@ public class Home_Page extends User{
 				System.out.println("\n Select screen to check movie timings and ticket availability(1,2,3)\n");
 				int screen_choice=user_input.nextInt();
 				book_ticket.book_show(screen_choice,book_ticket);
-				System.out.println("Choose movie to check ticket availability");
-				int movie_choice=user_input.nextInt();
-				String selected_flim=book_ticket.show_ticket_availability(screen_choice,movie_choice,book_ticket);
-				book_ticket.setbooked_movie(selected_flim);
+				//
+				//
+				//
+				//book_ticket.setbooked_movie(selected_flim);
 				
 			}
 			break;
