@@ -126,25 +126,25 @@ public class Theatre {
 				{
 					System.out.printf("%-5s %-25s %-30s",(++movie_list_number),shows.getKey(),show_time);
 					System.out.println();
-					flim_time=show_time;
-					flim_name=shows.getKey();
+					//flim_time=show_time;
+					//flim_name=shows.getKey();
 				}
 			}
 			System.out.println();
 			book_ticket.setselected_screen(screen_choice);
 		}
-		
+		System.out.println("Choose movie to check ticket availability");
+		int movie_choice=user_input.nextInt();
+		book_ticket.show_ticket_availability(screen_choice,movie_choice,book_ticket);
 		System.out.println("Number of tickets to book show:");
 		int ticket_quantity=user_input.nextInt();
 		double payable_amount=0.00;
-		if(book_ticket.check_ticket_quantity(ticket_quantity,flim_time,book_ticket))
+		if(book_ticket.check_ticket_quantity(ticket_quantity,book_ticket))
 		{
 			payable_amount=calculate_ticket_price(ticket_quantity);
 			book_ticket.setbill_amount(payable_amount);
-			book_ticket.show_payment_details(flim_name,ticket_quantity,book_ticket);
+			book_ticket.show_payment_details(ticket_quantity,book_ticket);
 			System.out.println();
-			book_ticket.setbooked_show_time(flim_time);
-			book_ticket.setbooked_movie(flim_name);
 			book_ticket.setbooked_ticket_count(ticket_quantity);
 			book_ticket.update_tickets_availability(book_ticket);
 			//book_ticket.show_booked_tickets(book_ticket);
@@ -156,9 +156,8 @@ public class Theatre {
 		
 	}
 	
-	public String show_ticket_availability(int screen_choice,int movie_choice,Start_Booking book_ticket)
+	public void show_ticket_availability(int screen_choice,int movie_choice,Start_Booking book_ticket)
 	{
-		String selected_movie="";
 		LinkedHashMap<String,ArrayList<String>> screen=new LinkedHashMap<>();
 		String each_movie="";
 		ArrayList<String> each_movie_time=new ArrayList<>();
@@ -170,10 +169,8 @@ public class Theatre {
 		}
 		else
 		{
-			for(Map.Entry<Integer,LinkedHashMap<String,ArrayList<String>>> each_screen:Theatre.entrySet() )
-			{
-				screen=each_screen.getValue();
 				movie_index=0;
+				screen=Theatre.get(screen_choice);
 				for(Map.Entry<String,ArrayList<String>> movie:screen.entrySet())
 				{
 					each_movie_time=movie.getValue();
@@ -182,23 +179,23 @@ public class Theatre {
 					{
 						if(movie_choice==(++movie_index))
 						{
-							show_tickets(screen_choice,each_movie,each_movie_time.get(index));
+							show_tickets(screen_choice,each_movie,each_movie_time.get(index),book_ticket);
 						}
 					}
-					selected_movie=each_movie;
 				}
-			}
+			
 		}
-		return selected_movie;
 	}
 	
-	public void show_tickets(int screen_choice,String each_movie,String timing)
+	public void show_tickets(int screen_choice,String each_movie,String timing,Start_Booking book_ticket)
 	{
 		int serial_no=0;
 		System.out.println("\n-----------------------------------------------------------------------");
 		System.out.printf("%-5s %-35s %-5s %-10s","S.No","Movie Name","Show Timing","Available Tickets");
 		System.out.println();
 		System.out.println("\n-----------------------------------------------------------------------\n");
+		book_ticket.setbooked_movie(each_movie);
+		book_ticket.setbooked_show_time(timing);
 		switch(screen_choice)
 		{
 		case 1:
@@ -223,9 +220,10 @@ public class Theatre {
 		break;
 		}
 		System.out.println();
+		
 	}
 	
-	public boolean check_ticket_quantity(int required_quantity,String flim_time,Start_Booking book_ticket)
+	public boolean check_ticket_quantity(int required_quantity,Start_Booking book_ticket)
 	{
 		boolean is_ticket_available= false;
 		int current_quantity=0;
@@ -233,7 +231,7 @@ public class Theatre {
 		{
 		case 1:
 		{
-			current_quantity=screen1_tickets.get(flim_time);
+			current_quantity=screen1_tickets.get(book_ticket.getbooked_show_time());
 			//System.out.println(screen1_tickets.get(book_ticket.getbooked_show_time()));
 			if( current_quantity >=required_quantity)
 			{
@@ -244,7 +242,7 @@ public class Theatre {
 		
 		case 2:
 		{
-			if(screen2_tickets.get(flim_time) >=required_quantity)
+			if(screen2_tickets.get(book_ticket.getbooked_show_time()) >=required_quantity)
 			{
 				is_ticket_available=true;
 			}
@@ -253,7 +251,7 @@ public class Theatre {
 		
 		case 3:
 		{
-			if(screen2_tickets.get(flim_time) >=required_quantity)
+			if(screen2_tickets.get(book_ticket.getbooked_show_time()) >=required_quantity)
 			{
 				is_ticket_available=true;
 			}
@@ -298,7 +296,7 @@ public class Theatre {
 	}
 	
 	
-	public void show_payment_details(String flim_name,int quantity,Start_Booking book_ticket)
+	public void show_payment_details(int quantity,Start_Booking book_ticket)
 	{
 		int serial_no=0;
 		System.out.println("Screen:"+book_ticket.getselected_screen());
@@ -306,7 +304,7 @@ public class Theatre {
 		System.out.println("\n----------------------------------------------------------------------------------");
 		System.out.printf("%-5s %-25s %-15s %-25s","S_No","Movie Name","No of tickets","Price per Ticket");
 		System.out.println("\n----------------------------------------------------------------------------------");
-		System.out.printf("%-5s %-25s %-15s %-25s",(++serial_no),flim_name,quantity,120.00);
+		System.out.printf("%-5s %-25s %-15s %-25s",(++serial_no),book_ticket.getbooked_movie(),quantity,120.00);
 		System.out.println();
 		System.out.println("\n----------------------------------------------------------------------------------");
 		System.out.printf("%-45s %-25s","Gst for movie ticket","28%");
